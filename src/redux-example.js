@@ -13,7 +13,7 @@ const stateDefault= {
 
 var newTodoId = 1;
 
-const reducer = ( state = stateDefault, action) => {
+const oldReducer = ( state = stateDefault, action) => {
     
     // console.log('New action ', action)
     switch(action.type){
@@ -60,6 +60,19 @@ const reducer = ( state = stateDefault, action) => {
     }  
 }
 
+//name reducer
+var nameReducer = (state = 'Anonymous', action) => {
+    switch(action.type){
+        case 'CHANGE_NAME':
+           return action.name
+        default :
+           return state 
+    }  
+}
+//combined reducer
+const reducer = redux.combineReducers({
+    name : nameReducer
+})
 
 const store = redux.createStore(reducer, redux.compose(
       window.devToolsExtension ? window.devToolsExtension() : f => f
