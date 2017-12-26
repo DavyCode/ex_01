@@ -69,9 +69,40 @@ var nameReducer = (state = 'Anonymous', action) => {
            return state 
     }  
 }
+
+//ChangeText reducer
+var searchTextReducer = (state = '', action) => {
+    switch(action.type){
+        case 'CHANGE_SEARCH_TEXT':
+           return action.searchText
+        default :
+           return state 
+    }  
+}
+
+// Todo reducer
+var todoReducer = (state = [], action) => {
+    switch(action.type){
+        case "ADD_TODOS" :
+            return  [
+                ...state,
+                { 
+                    id: newTodoId++,
+                    todo : action.todo
+                }
+            ]
+        default :
+           return state     
+    }   
+}
+
+
+
 //combined reducer
 const reducer = redux.combineReducers({
-    name : nameReducer
+    name : nameReducer,
+    todos: todoReducer,
+    searchText : searchTextReducer
 })
 
 const store = redux.createStore(reducer, redux.compose(
