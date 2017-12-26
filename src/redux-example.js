@@ -1,7 +1,7 @@
 // import redux from 'redux'
 var redux = require('redux')
 
-console.log('redux starting up.............')
+console.log('redux starting up...')
 
 
 // const stateDefault= {
@@ -11,8 +11,8 @@ console.log('redux starting up.............')
 //     movies : []
 // }
 
-var newTodoId = 1;
-var newMovieId = 1;
+let newTodoId = 1;
+let newMovieId = 1;
 
 // const oldReducer = ( state = stateDefault, action) => {
     
@@ -70,6 +70,13 @@ var nameReducer = (state = 'Anonymous', action) => {
            return state 
     }  
 }
+//name action generator
+const nameAction = (value) => {
+    return {
+        type : 'CHANGE_NAME',
+        name : value
+    }
+}
 
 //ChangeText reducer
 var searchTextReducer = (state = '', action) => {
@@ -79,6 +86,13 @@ var searchTextReducer = (state = '', action) => {
         default :
            return state 
     }  
+}
+//change searchtext action generator
+const changeSearchAction = (value) => {
+    return {
+        type : 'CHANGE_SEARCH_TEXT',
+        searchText : value
+    }
 }
 
 // Todo reducer
@@ -97,6 +111,20 @@ var todoReducer = (state = [], action) => {
         default :
            return state 
     }   
+}
+//addtodo action generator
+const addTodoAction = (value) => {
+    return {
+        type : 'ADD_TODOS',
+        todo : value
+    }
+}
+//removetodo action generator
+const removeTodoAction = (value) => {
+    return {
+        type : 'REMOVE_TODOS',
+        id : value
+    }
 }
 
 
@@ -118,6 +146,21 @@ var movieReducer = (state = [], action) => {
         default :
            return state     
     }   
+}
+//addtodo action generator
+const addMovieAction = (value) => {
+    return {
+        type : 'ADD_MOVIES',
+        title : value.title,
+        genre : value.genre
+    }
+}
+//removetodo action generator
+const removeMovieAction = (value) => {
+    return {
+        type : 'REMOVE_MOVIE',
+        id : value
+    }
 }
 
 
@@ -152,105 +195,129 @@ const unsubscribe = store.subscribe( () => {
 // unsubscribe();
 
 setTimeout(() => {
-    store.dispatch({
-    type :'CHANGE_NAME',
-    name : "Dave"   
-})
-console.log( store.getState())}, 2000)
+    // store.dispatch({
+    //     type :'CHANGE_NAME',
+    //     name : "Dave"   
+    // })
+    store.dispatch(nameAction('Dave'))
+    console.log( store.getState())
+}, 2000)
 
 
 setTimeout(() => {
-    store.dispatch({
-        type :'CHANGE_SEARCH_TEXT',
-        searchText : "What is preact?"
-})
-console.log( store.getState())}, 4000)
+    // store.dispatch({
+    //     type :'CHANGE_SEARCH_TEXT',
+    //     searchText : "What is preact?"
+    // })
+    store.dispatch(changeSearchAction('What is redux?'))
+    console.log( store.getState())
+}, 4000)
 
 
-setTimeout(() => {
-    store.dispatch({
-        type :'CHANGE_SEARCH_TEXT',
-        searchText : "What is redux?"
-    })
-console.log( store.getState())}, 6000)
+// setTimeout(() => {
+//     store.dispatch({
+//         type :'CHANGE_SEARCH_TEXT',
+//         searchText : "What is redux?"
+//     })
+// console.log( store.getState())}, 6000)
  
 
-setTimeout(() => {
-store.dispatch({
-    type :'CHANGE_SEARCH_TEXT',
-    searchText : "What is state?"
-})
-console.log( store.getState())}, 8000)
+// setTimeout(() => {
+// store.dispatch({
+//     type :'CHANGE_SEARCH_TEXT',
+//     searchText : "What is state?"
+// })
+// console.log( store.getState())}, 8000)
 
 
 setTimeout(() => {
-store.dispatch({
-    type :'ADD_TODOS',
-    todo : "learn"
-});
-console.log( store.getState())}, 10000)
-
-
-setTimeout(() => {
-store.dispatch({
-    type :'ADD_TODOS',
-    todo : "learn more"
-})
-console.log( store.getState())}, 12000)
-
-
-setTimeout(() => {
-store.dispatch({
-    type :'ADD_TODOS',
-    todo : "learn more dont stop"
-});
-console.log( store.getState())}, 14000)
-
+    // store.dispatch({
+    //     type :'ADD_TODOS',
+    //     todo : "learn"
+    // })
+    store.dispatch(addTodoAction('Learn redux'))
+    console.log( store.getState())
+}, 6000)
 
 //remove item action
 setTimeout(() => {
-    store.dispatch({
-        type :'REMOVE_TODOS',
-        id: 2
-    })
-console.log( store.getState())}, 24000)
+    // store.dispatch({
+    //     type :'REMOVE_TODOS',
+    //     id: 2
+    // })
+    store.dispatch(removeTodoAction(2))
+    console.log( store.getState())
+}, 8000)
+
+
+
+
+// setTimeout(() => {
+// store.dispatch({
+//     type :'ADD_TODOS',
+//     todo : "learn more"
+// })
+// console.log( store.getState())}, 12000)
+
+
+// setTimeout(() => {
+// store.dispatch({
+//     type :'ADD_TODOS',
+//     todo : "learn more dont stop"
+// });
+// console.log( store.getState())}, 14000)
+
+
 
 
 
 setTimeout(() => {
-store.dispatch({
-    type :'ADD_MOVIES',
-    title : "Madmax",
-    genre:  'Action triller'
-});
-console.log( store.getState())}, 16000)
-
-
-setTimeout(() => {
-store.dispatch({
-    type :'ADD_MOVIES',
-    title : "Continum",
-    genre:  'Action'
-});
-console.log( store.getState())}, 18000)
-
-
+    // store.dispatch({
+    //     type :'ADD_MOVIES',
+    //     title : "Madmax",
+    //     genre:  'Action triller'
+    // });
+    store.dispatch(addMovieAction({ title : "mad max", genre: 'Action thriller'}))
+    console.log( store.getState())
+}, 10000)
 
 setTimeout(() => {
-store.dispatch({
-    type :'ADD_MOVIES',
-    title : "Bright",
-    genre:  'Action Scifi thriller'
-});
-console.log( store.getState())}, 20000)
+    // store.dispatch({
+    //     type :'ADD_MOVIES',
+    //     title : "Madmax",
+    //     genre:  'Action triller'
+    // });
+    store.dispatch(removeMovieAction(2))
+    console.log( store.getState())
+}, 12000)
 
 
-//remove item action
-setTimeout(() => {
-    store.dispatch({
-        type :'REMOVE_MOVIE',
-        id: 2
-    })
-console.log( store.getState())}, 26000)
+
+// setTimeout(() => {
+// store.dispatch({
+//     type :'ADD_MOVIES',
+//     title : "Continum",
+//     genre:  'Action'
+// });
+// console.log( store.getState())}, 18000)
+
+
+
+// setTimeout(() => {
+// store.dispatch({
+//     type :'ADD_MOVIES',
+//     title : "Bright",
+//     genre:  'Action Scifi thriller'
+// });
+// console.log( store.getState())}, 20000)
+
+
+// //remove item action
+// setTimeout(() => {
+//     store.dispatch({
+//         type :'REMOVE_MOVIE',
+//         id: 2
+//     })
+// console.log( store.getState())}, 26000)
 
 
