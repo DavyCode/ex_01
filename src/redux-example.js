@@ -4,61 +4,62 @@ var redux = require('redux')
 console.log('redux starting up.............')
 
 
-const stateDefault= {
-    name : 'Anonymous',
-    todos :[],
-    day : Date().toLocaleString().slice(16, 24),
-    movies : []
-}
+// const stateDefault= {
+//     name : 'Anonymous',
+//     todos :[],
+//     day : Date().toLocaleString().slice(16, 24),
+//     movies : []
+// }
 
 var newTodoId = 1;
+var newMovieId = 1;
 
-const oldReducer = ( state = stateDefault, action) => {
+// const oldReducer = ( state = stateDefault, action) => {
     
     // console.log('New action ', action)
-    switch(action.type){
-        case 'CHANGE_NAME':
-           return{
-               ...state,
-               name: action.name
-           };
-        case "CHANGE_SEARCH_TEXT":
-            return {
-                ...state,
-                searchText : action.searchText
-            }
-        case "ADD_TODOS" :
-            return {
-                ...state,
-                todos :[
-                    ...state.todos,
-                   { 
-                        id: newTodoId++,
-                        todo : action.todo
-                    }
-                ],
-            } 
-        case 'REMOVE_TODOS':
-            return {
-                ...state,
-                todos : state.todos.filter((todo) => todo.id !== action.id)
-            }    
-        case 'ADD_MOVIES':
-            return{
-                ...state,
-                movies :[
-                   ...state.movies,
-                   {
-                    id: newTodoId++,
-                    title: action.title,
-                    genre: action.genre
-                   }
-                ]
-            }       
-        default:  
-            return state; 
-    }  
-}
+//     switch(action.type){
+//         case 'CHANGE_NAME':
+//            return{
+//                ...state,
+//                name: action.name
+//            };
+//         case "CHANGE_SEARCH_TEXT":
+//             return {
+//                 ...state,
+//                 searchText : action.searchText
+//             }
+//         case "ADD_TODOS" :
+//             return {
+//                 ...state,
+//                 todos :[
+//                     ...state.todos,
+//                    { 
+//                         id: newTodoId++,
+//                         todo : action.todo
+//                     }
+//                 ],
+//             } 
+//         case 'REMOVE_TODOS':
+//             return {
+//                 ...state,
+//                 todos : state.todos.filter((todo) => todo.id !== action.id)
+//             }    
+//         case 'ADD_MOVIES':
+//             return{
+//                 ...state,
+//                 movies :[
+//                    ...state.movies,
+//                    {
+//                     id: newTodoId++,
+//                     title: action.title,
+//                     genre: action.genre
+//                    }
+//                 ]
+//             }       
+//         default:  
+//             return state; 
+//     }  
+// }
 
 //name reducer
 var nameReducer = (state = 'Anonymous', action) => {
@@ -91,6 +92,29 @@ var todoReducer = (state = [], action) => {
                     todo : action.todo
                 }
             ]
+        case 'REMOVE_TODOS':
+            return state.filter((todo) => todo.id !== action.id)   
+        default :
+           return state 
+    }   
+}
+
+
+
+// Movie reducer
+var movieReducer = (state = [], action) => {
+    switch(action.type){
+        case "ADD_MOVIES" :
+            return  [
+                ...state,
+                { 
+                    id: newMovieId++,
+                    title : action.title,
+                    genre: action.genre
+                }
+            ]
+        case 'REMOVE_MOVIE':
+            return state.filter((movie) => movie.id !== action.id)   
         default :
            return state     
     }   
@@ -102,7 +126,8 @@ var todoReducer = (state = [], action) => {
 const reducer = redux.combineReducers({
     name : nameReducer,
     todos: todoReducer,
-    searchText : searchTextReducer
+    searchText : searchTextReducer,
+    movies : movieReducer
 })
 
 const store = redux.createStore(reducer, redux.compose(
@@ -218,5 +243,14 @@ store.dispatch({
     genre:  'Action Scifi thriller'
 });
 console.log( store.getState())}, 20000)
+
+
+//remove item action
+setTimeout(() => {
+    store.dispatch({
+        type :'REMOVE_MOVIE',
+        id: 2
+    })
+console.log( store.getState())}, 26000)
 
 
